@@ -1,0 +1,74 @@
+{
+    "name": "aviato/laravel",
+    "description": "Extend an Aviato agent with custom actions, computed fields, hooks, segments, search and charts from your Laravel application.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "aviato",
+        "laravel",
+        "plugin",
+        "back-office"
+    ],
+    "require": {
+        "php": "^8.3",
+        "google/protobuf": "^4.33 || ^5.34",
+        "illuminate/console": "^12.0 || ^13.0",
+        "illuminate/contracts": "^12.0 || ^13.0",
+        "illuminate/database": "^12.0 || ^13.0",
+        "illuminate/http": "^12.0 || ^13.0",
+        "illuminate/support": "^12.0 || ^13.0",
+        "spatie/laravel-package-tools": "^1.92",
+        "standard-webhooks/standard-webhooks": "^1.0",
+        "symfony/process": "^7.2 || ^8.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.9",
+        "laravel/pint": "^1.24",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "pestphp/pest": "^4.0 || ^5.0",
+        "pestphp/pest-plugin-laravel": "^4.0 || ^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aviato\\Laravel\\": "src/",
+            "Aviato\\Plugin\\V1\\": "generated/Aviato/Plugin/V1/",
+            "GPBMetadata\\Aviato\\Plugin\\V1\\": "generated/GPBMetadata/Aviato/Plugin/V1/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Aviato\\Laravel\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "lint": [
+            "pint --test",
+            "phpstan analyse --memory-limit=1G"
+        ],
+        "format": "pint"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aviato\\Laravel\\AviatoServiceProvider"
+            ],
+            "aliases": {
+                "Aviato": "Aviato\\Laravel\\Facades\\Aviato"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "homepage": "https://docs.getaviato.com/integrations/laravel",
+    "support": {
+        "issues": "https://github.com/getaviato/aviato-laravel/issues",
+        "source": "https://github.com/getaviato/aviato-laravel"
+    }
+}

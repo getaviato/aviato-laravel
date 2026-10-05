@@ -1,0 +1,15 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 8
+    paths:
+        - src
+        - config
+        - routes
+    tmpDir: build/phpstan
+    ignoreErrors:
+        # The package's own config file is merged into the application's config directory.
+        -
+            identifier: larastan.noEnvCallsOutsideOfConfig
+            path: config/aviato.php

@@ -1,0 +1,70 @@
+{
+    "name": "@aviato/sdk-laravel",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Laravel SDK for Aviato plugins (Composer package aviato/laravel).",
+    "devDependencies": {
+        "@bufbuild/buf": "^1.73.0"
+    },
+    "nx": {
+        "targets": {
+            "composer-install": {
+                "command": "composer install --no-interaction --no-progress",
+                "options": {
+                    "cwd": "{projectRoot}"
+                }
+            },
+            "generate": {
+                "command": "buf generate",
+                "options": {
+                    "cwd": "{projectRoot}"
+                },
+                "inputs": [
+                    "{workspaceRoot}/packages/protocol/proto/**/*",
+                    "{projectRoot}/buf.gen.yaml"
+                ],
+                "outputs": [
+                    "{projectRoot}/generated"
+                ],
+                "cache": true
+            },
+            "test": {
+                "command": "vendor/bin/pest",
+                "options": {
+                    "cwd": "{projectRoot}"
+                },
+                "dependsOn": [
+                    "composer-install"
+                ],
+                "inputs": [
+                    "default",
+                    "{workspaceRoot}/packages/protocol/fixtures/ui*.json"
+                ]
+            },
+            "lint": {
+                "command": "vendor/bin/pint --test && vendor/bin/phpstan analyse --memory-limit=1G --no-progress",
+                "options": {
+                    "cwd": "{projectRoot}"
+                },
+                "dependsOn": [
+                    "composer-install"
+                ],
+                "inputs": [
+                    "default"
+                ]
+            },
+            "format": {
+                "command": "vendor/bin/pint",
+                "options": {
+                    "cwd": "{projectRoot}"
+                },
+                "dependsOn": [
+                    "composer-install"
+                ]
+            }
+        },
+        "implicitDependencies": [
+            "@aviato/protocol"
+        ]
+    }
+}

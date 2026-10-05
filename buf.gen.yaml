@@ -1,0 +1,9 @@
+# Generates the PHP message classes from the plugin protocol (`buf generate` in this folder).
+# The output is committed so Composer users never need buf.
+version: v2
+clean: true
+inputs:
+  - directory: ../protocol/proto
+plugins:
+  - remote: buf.build/protocolbuffers/php
+    out: generated
