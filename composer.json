@@ -1,5 +1,5 @@
 {
-    "name": "aviato/laravel",
+    "name": "getaviato/laravel",
     "description": "Extend an Aviato agent with custom actions, computed fields, hooks, segments, search and charts from your Laravel application.",
     "type": "library",
     "license": "MIT",
@@ -70,5 +70,8 @@
     "support": {
         "issues": "https://github.com/getaviato/aviato-laravel/issues",
         "source": "https://github.com/getaviato/aviato-laravel"
+    },
+    "replace": {
+        "aviato/laravel": "^0.1"
     }
 }

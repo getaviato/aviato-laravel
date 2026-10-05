@@ -19,7 +19,7 @@ it('serves the manifest', function () {
     $this->rpc('GetManifest', ['agentProtocolVersion' => 1])
         ->assertOk()
         ->assertJsonPath('manifest.protocolVersion', 1)
-        ->assertJsonPath('manifest.sdkName', 'aviato/laravel')
+        ->assertJsonPath('manifest.sdkName', 'getaviato/laravel')
         ->assertJsonPath('manifest.actions.0', [
             'collection' => 'customers',
             'name' => 'Refund last invoice',

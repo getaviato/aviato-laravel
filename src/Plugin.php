@@ -49,9 +49,9 @@ class Plugin
 {
     public const PROTOCOL_VERSION = 1;
 
-    public const SDK_NAME = 'aviato/laravel';
+    public const SDK_NAME = 'getaviato/laravel';
 
-    public const SDK_VERSION = '0.1.0';
+    public const SDK_VERSION = '0.1.1';
 
     /** @var array<string, ActionDefinition> */
     private array $actions = [];

@@ -11,7 +11,7 @@ Requires PHP 8.3+ and Laravel 12 or 13.
 ## Install
 
 ```bash
-composer require aviato/laravel
+composer require getaviato/laravel
 php artisan aviato:install --no-download   # publishes config/aviato.php
 ```
 
@@ -118,7 +118,7 @@ Aviato::datasource()
 sources, `->replication()` with a `listChanges` handler lets the agent keep a copy, refreshed on
 the collection's interval (`->replication(intervalSeconds: 300)`) and on demand with
 `Aviato::refreshReplica('tickets', $dataUrl)`. See
-[the custom datasources guide](../../docs/guides/custom-datasources.md).
+[the custom datasources guide](https://docs.getaviato.com/integrations/custom-datasources).
 
 ### Relations
 
