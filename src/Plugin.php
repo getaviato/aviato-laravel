@@ -24,6 +24,8 @@ use Aviato\Laravel\Enums\HookOperation;
 use Aviato\Laravel\Enums\HookTiming;
 use Aviato\Laravel\Exceptions\InvalidDefinitionException;
 use Aviato\Laravel\Exceptions\RpcException;
+use Aviato\Laravel\Integrations\IntegrationPlugin;
+use Aviato\Laravel\Integrations\IntegrationWidget;
 use Aviato\Laravel\Support\Structs;
 use Aviato\Plugin\V1\ActionDefinition as ProtoActionDefinition;
 use Aviato\Plugin\V1\ChartDefinition as ProtoChartDefinition;
@@ -33,6 +35,7 @@ use Aviato\Plugin\V1\Manifest;
 use Aviato\Plugin\V1\SearchDefinition as ProtoSearchDefinition;
 use Aviato\Plugin\V1\SegmentDefinition as ProtoSegmentDefinition;
 use Aviato\Plugin\V1\SummaryDefinition;
+use Aviato\Plugin\V1\WidgetDefinition;
 use Aviato\Plugin\V1\WriteOverrideDefinition as ProtoWriteOverrideDefinition;
 use Closure;
 use Illuminate\Http\Client\RequestException;
@@ -51,7 +54,7 @@ class Plugin
 
     public const SDK_NAME = 'getaviato/laravel';
 
-    public const SDK_VERSION = '0.1.1';
+    public const SDK_VERSION = '0.3.0';
 
     /** @var array<string, ActionDefinition> */
     private array $actions = [];
@@ -76,6 +79,9 @@ class Plugin
 
     /** @var array<string, array<string, mixed>> */
     private array $summaries = [];
+
+    /** @var array<string, WidgetDefinition> */
+    private array $widgets = [];
 
     /** @var list<RelationHint> */
     private array $relationHints = [];
@@ -102,6 +108,22 @@ class Plugin
     public function summary(string $collection, array $document): self
     {
         $this->summaries[$collection] = $document;
+
+        return $this;
+    }
+
+    /** Atomically install a snapshot of a typed provider integration. */
+    public function use(IntegrationPlugin $integration): self
+    {
+        $definitions = array_map(static fn (IntegrationWidget $widget): WidgetDefinition => new WidgetDefinition([
+            'collection' => $widget->collection, 'name' => $widget->name, 'title' => $widget->title,
+            'provider' => $widget->provider, 'resource' => $widget->resource,
+            'binding_field' => $widget->binding->field, 'binding_relation' => $widget->binding->relation,
+            'credential_env' => $widget->credentialEnv, 'read_only' => $widget->readOnly, 'account' => $widget->account,
+        ]), $integration->widgets());
+        foreach ($definitions as $definition) {
+            $this->widgets[$definition->getCollection()."\0".$definition->getName()] = $definition;
+        }
 
         return $this;
     }
@@ -236,6 +258,7 @@ class Plugin
     public function manifest(): Manifest
     {
         return new Manifest([
+            'widgets' => array_map(static fn (WidgetDefinition $widget): WidgetDefinition => clone $widget, array_values($this->widgets)),
             'summaries' => array_map(fn (string $collection): SummaryDefinition => new SummaryDefinition([
                 'collection' => $collection,
                 'document' => Structs::fromArray($this->summaries[$collection]),

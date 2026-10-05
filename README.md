@@ -199,3 +199,37 @@ The protocol messages in `generated/` come from `packages/protocol/proto` throug
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Ready-to-use provider widgets
+
+Use the typed `StripePlugin` implementation of `IntegrationPlugin` to register read-only
+Stripe customer, subscription and invoice widgets with a local ID
+column or a `belongsTo` relation. Credentials live in the **customer agent environment**;
+SDK declarations contain only the environment variable name. The browser calls the
+customer agent directly, and provider data does not pass through Aviato infrastructure.
+
+See the [provider widget guide](https://docs.getaviato.com/docs/integrations/widgets)
+for registration examples and exact key permissions. Restricted key prefixes do not prove
+read-only permissions: the operator must configure Read/None permissions in Stripe and
+confirm `readOnly`; the adapter itself only sends GET requests.
+
+## Zendesk widgets
+
+```php
+use Aviato\Laravel\Integrations\ZendeskPlugin;
+use Aviato\Laravel\Integrations\RecordBinding;
+Aviato::use((new ZendeskPlugin('northstar', 'ZENDESK_WIDGET_TOKEN', true))
+    ->tickets('customers', 'support', new RecordBinding('zendesk_user_id')));
+```
+
+The typed integration also supports user profiles and individual tickets. Bind to a
+local ID column or one belongsTo relation. Install a customer agent with Zendesk
+support before using these APIs. These examples require core SDK 0.3.0 (and NestJS adapter 0.2.0 when used).
+SDK releases do not publish agent binaries.
+
+Store the OAuth token on the **customer agent**, with `users:read` / `tickets:read`
+scopes. Before each read, the agent verifies actual scopes and rejects write-enabled
+tokens. Only the subdomain label and credential environment-variable name belong
+in SDK configuration. No provider credentials or responses pass through Aviato's
+control plane. See the [Zendesk guide](https://docs.getaviato.com/integrations/zendesk)
+for all methods, permissions and release requirements.

@@ -3,12 +3,7 @@
     "description": "Extend an Aviato agent with custom actions, computed fields, hooks, segments, search and charts from your Laravel application.",
     "type": "library",
     "license": "MIT",
-    "keywords": [
-        "aviato",
-        "laravel",
-        "plugin",
-        "back-office"
-    ],
+    "keywords": ["aviato", "laravel", "plugin", "back-office"],
     "require": {
         "php": "^8.3",
         "google/protobuf": "^4.33 || ^5.34",
@@ -42,17 +37,12 @@
     },
     "scripts": {
         "test": "pest",
-        "lint": [
-            "pint --test",
-            "phpstan analyse --memory-limit=1G"
-        ],
+        "lint": ["pint --test", "phpstan analyse --memory-limit=1G"],
         "format": "pint"
     },
     "extra": {
         "laravel": {
-            "providers": [
-                "Aviato\\Laravel\\AviatoServiceProvider"
-            ],
+            "providers": ["Aviato\\Laravel\\AviatoServiceProvider"],
             "aliases": {
                 "Aviato": "Aviato\\Laravel\\Facades\\Aviato"
             }

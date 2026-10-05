@@ -7,6 +7,7 @@ use Aviato\Laravel\Testing\PluginFake;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static \Aviato\Laravel\Plugin use(\Aviato\Laravel\Integrations\IntegrationPlugin $integration)
  * @method static \Aviato\Laravel\Plugin summary(string $collection, array<string, mixed> $document)
  * @method static \Aviato\Laravel\Definitions\ActionDefinition action(string $collection, string $name)
  * @method static \Aviato\Laravel\Definitions\ComputedFieldDefinition computedField(string $collection, string $name)

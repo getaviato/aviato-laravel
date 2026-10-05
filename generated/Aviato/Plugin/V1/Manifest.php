@@ -70,6 +70,12 @@ class Manifest extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated .aviato.plugin.v1.SummaryDefinition summaries = 13 [json_name = "summaries"];</code>
      */
     private $summaries;
+    /**
+     * Customer-agent integrations. Credential values must never appear in the manifest.
+     *
+     * Generated from protobuf field <code>repeated .aviato.plugin.v1.WidgetDefinition widgets = 14 [json_name = "widgets"];</code>
+     */
+    private $widgets;
 
     /**
      * Constructor.
@@ -92,6 +98,8 @@ class Manifest extends \Google\Protobuf\Internal\Message
      *           True when the plugin implements DatasourceService (custom collections).
      *     @type \Aviato\Plugin\V1\SummaryDefinition[] $summaries
      *           Declarative record summaries. No executable code or external assets.
+     *     @type \Aviato\Plugin\V1\WidgetDefinition[] $widgets
+     *           Customer-agent integrations. Credential values must never appear in the manifest.
      * }
      */
     public function __construct($data = null)
@@ -389,6 +397,32 @@ class Manifest extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Aviato\Plugin\V1\SummaryDefinition::class);
         $this->summaries = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Customer-agent integrations. Credential values must never appear in the manifest.
+     *
+     * Generated from protobuf field <code>repeated .aviato.plugin.v1.WidgetDefinition widgets = 14 [json_name = "widgets"];</code>
+     * @return RepeatedField<\Aviato\Plugin\V1\WidgetDefinition>
+     */
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+
+    /**
+     * Customer-agent integrations. Credential values must never appear in the manifest.
+     *
+     * Generated from protobuf field <code>repeated .aviato.plugin.v1.WidgetDefinition widgets = 14 [json_name = "widgets"];</code>
+     * @param \Aviato\Plugin\V1\WidgetDefinition[] $var
+     * @return $this
+     */
+    public function setWidgets(array|RepeatedField $var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Aviato\Plugin\V1\WidgetDefinition::class);
+        $this->widgets = $arr;
 
         return $this;
     }
