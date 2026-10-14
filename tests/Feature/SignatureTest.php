@@ -1,5 +1,6 @@
 <?php
 
+use Aviato\Laravel\Support\Signing;
 use Aviato\Laravel\Tests\Fixtures\FixturePlugin;
 use Illuminate\Testing\TestResponse;
 
@@ -54,4 +55,18 @@ it('fails closed when no secret is configured', function () {
 it('does not require a CSRF token or a session', function () {
     $response = manifestCall($this->signedHeaders('{}'))->assertOk();
     expect($response->headers->getCookies())->toBeEmpty();
+});
+
+it('rejects a signature bound to another endpoint, and replays', function () {
+    // Signed for ComputeFields (whose body could have the same shape), posted to GetManifest.
+    $id = Signing::boundMessageId('1', 'POST', 'aviato.plugin.v1.PluginService/ComputeFields');
+    manifestCall($this->signedHeaders('{}', id: $id))->assertStatus(401);
+    $bound = Signing::boundMessageId('2', 'POST', 'aviato.plugin.v1.PluginService/GetManifest');
+    manifestCall($this->signedHeaders('{}', id: $bound))->assertOk();
+    manifestCall($this->signedHeaders('{}', id: $bound))->assertStatus(401);
+});
+
+it('fails closed on a secret that decodes to a short key', function () {
+    config()->set('aviato.secret', 'whsec_');
+    manifestCall($this->signedHeaders('{}', 'whsec_'))->assertStatus(500)->assertJsonPath('code', 'internal');
 });

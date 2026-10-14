@@ -23,7 +23,7 @@ class ResolveSegmentResponse extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type \Google\Protobuf\Struct $filter
-     *           Preferred: a filter the agent applies (MongoDB query syntax).
+     *           Preferred: a filter the connector applies (MongoDB query syntax).
      *     @type \Aviato\Plugin\V1\RecordIds $record_ids
      *           Fallback: explicit record ids.
      * }
@@ -35,7 +35,7 @@ class ResolveSegmentResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Preferred: a filter the agent applies (MongoDB query syntax).
+     * Preferred: a filter the connector applies (MongoDB query syntax).
      *
      * Generated from protobuf field <code>.google.protobuf.Struct filter = 1 [json_name = "filter"];</code>
      * @return \Google\Protobuf\Struct|null
@@ -51,7 +51,7 @@ class ResolveSegmentResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Preferred: a filter the agent applies (MongoDB query syntax).
+     * Preferred: a filter the connector applies (MongoDB query syntax).
      *
      * Generated from protobuf field <code>.google.protobuf.Struct filter = 1 [json_name = "filter"];</code>
      * @param \Google\Protobuf\Struct $var

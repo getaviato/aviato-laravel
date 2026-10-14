@@ -72,7 +72,7 @@ final class PluginService
         $class = self::METHODS[$method] ?? throw new RpcException('unimplemented', "Unknown method aviato.plugin.v1.PluginService/{$method}");
         $request = new $class;
         try {
-            // Unknown fields are ignored so newer agents can talk to older SDKs.
+            // Unknown fields are ignored so newer connectors can talk to older SDKs.
             $request->mergeFromJsonString(trim($body) === '' ? '{}' : $body, true);
         } catch (Throwable $exception) {
             throw RpcException::invalidArgument("Invalid {$method} request: {$exception->getMessage()}");

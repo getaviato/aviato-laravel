@@ -68,7 +68,7 @@ beforeEach(function () {
 dataset('caller', [[[
     'userId' => 'u1', 'name' => 'Ada', 'actorType' => 'human', 'role' => 'admin', 'organizationId' => 'o1',
     'projectId' => 'p1', 'environment' => 'production', 'requestId' => 'r1', 'invocationToken' => 'tok_123',
-    'dataUrl' => 'http://agent.test/data',
+    'dataUrl' => 'http://connector.test/data',
 ]]]);
 
 it('announces custom datasources in the manifest and describes them', function () {
@@ -100,7 +100,7 @@ it('does not announce a datasource without collections', function () {
     expect($plugin->manifest()->getDatasource())->toBeFalse();
 });
 
-it('lists with the filter, sort and caller the agent sends', function (array $caller) {
+it('lists with the filter, sort and caller the connector sends', function (array $caller) {
     datasourceRpc('List', ['caller' => $caller, 'collection' => 'tickets', 'filter' => ['status' => ['$eq' => 'open']], 'sort' => '-id', 'limit' => 10, 'includeTotal' => true])
         ->assertOk()
         ->assertExactJson(['records' => [['id' => 1, 'subject' => 'Login broken', 'status' => 'open']], 'total' => '1']);
@@ -149,7 +149,7 @@ it('answers unknown datasource methods with unimplemented and rejects unsigned c
     $this->call('POST', '/aviato/aviato.plugin.v1.DatasourceService/List', [], [], [], ['CONTENT_TYPE' => 'application/json'], '{}')->assertUnauthorized();
 });
 
-it('calls datasource handlers without an agent', function () {
+it('calls datasource handlers without a connector', function () {
     $fake = Aviato::fake();
 
     expect($fake->listCustomRecords('tickets', ['status' => ['$eq' => 'closed']]))->toBe(['records' => [['id' => 2, 'subject' => 'Invoice copy', 'status' => 'closed']], 'total' => 1])
@@ -172,23 +172,23 @@ it('refuses collections declared twice', function () {
     expect(fn () => Aviato::fake()->customCollections())->toThrow(InvalidDefinitionException::class, 'declared twice');
 });
 
-it('asks the agent to refresh a replica with a signed request', function () {
-    Http::fake(['agent.test/*' => Http::response(['collection' => 'rates', 'upserted' => 1, 'deleted' => 0, 'cursor' => '1'])]);
+it('asks the connector to refresh a replica with a signed request', function () {
+    Http::fake(['connector.test/*' => Http::response(['collection' => 'rates', 'upserted' => 1, 'deleted' => 0, 'cursor' => '1'])]);
 
-    expect(Aviato::refreshReplica('rates', 'http://agent.test/plugin-data/'))->toBe(['collection' => 'rates', 'upserted' => 1, 'deleted' => 0, 'cursor' => '1']);
+    expect(Aviato::refreshReplica('rates', 'http://connector.test/plugin-data/'))->toBe(['collection' => 'rates', 'upserted' => 1, 'deleted' => 0, 'cursor' => '1']);
 
     Http::assertSent(function (Request $request) {
         $headers = array_map(fn (array $values) => $values[0], array_change_key_case($request->headers()));
         (new Webhook(TestCase::SECRET))->verify($request->body(), $headers);
 
-        return $request->url() === 'http://agent.test/plugin-data/replicas/rates/refresh' && $request->method() === 'POST';
+        return $request->url() === 'http://connector.test/plugin-data/replicas/rates/refresh' && $request->method() === 'POST';
     });
 });
 
 it('reports a refused replica refresh', function () {
-    Http::fake(['agent.test/*' => Http::response(['detail' => 'Unauthorized'], 401)]);
+    Http::fake(['connector.test/*' => Http::response(['detail' => 'Unauthorized'], 401)]);
 
-    Aviato::refreshReplica('rates', 'http://agent.test/plugin-data');
+    Aviato::refreshReplica('rates', 'http://connector.test/plugin-data');
 })->throws(RequestException::class);
 
 it('distinguishes composite keys containing separators in the get fallback', function () {

@@ -15,7 +15,7 @@ use Google\Protobuf\RepeatedField;
 class GetManifestRequest extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Highest protocol version the agent speaks.
+     * Highest protocol version the connector speaks.
      *
      * Generated from protobuf field <code>uint32 agent_protocol_version = 1 [json_name = "agentProtocolVersion"];</code>
      */
@@ -28,7 +28,7 @@ class GetManifestRequest extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $agent_protocol_version
-     *           Highest protocol version the agent speaks.
+     *           Highest protocol version the connector speaks.
      * }
      */
     public function __construct($data = null)
@@ -38,7 +38,7 @@ class GetManifestRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Highest protocol version the agent speaks.
+     * Highest protocol version the connector speaks.
      *
      * Generated from protobuf field <code>uint32 agent_protocol_version = 1 [json_name = "agentProtocolVersion"];</code>
      * @return int
@@ -49,7 +49,7 @@ class GetManifestRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Highest protocol version the agent speaks.
+     * Highest protocol version the connector speaks.
      *
      * Generated from protobuf field <code>uint32 agent_protocol_version = 1 [json_name = "agentProtocolVersion"];</code>
      * @param int $var

@@ -2,21 +2,22 @@
 
 namespace Aviato\Laravel\Console;
 
-use Aviato\Laravel\Agent\AgentBinary;
+use Aviato\Laravel\Connector\ConnectorBinary;
 use Illuminate\Console\Command;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Facades\File;
 use Throwable;
 
-/** Publishes the configuration and downloads the agent binary for this platform. */
+/** Publishes the configuration and downloads the connector binary for this platform. */
 final class InstallCommand extends Command
 {
     protected $signature = 'aviato:install
-        {--agent-version= : Agent version to download instead of the configured one}
-        {--force : Download the agent even when it is already installed}
+        {--agent-version= : Deprecated alias for --connector-version}
+        {--connector-version= : Connector version to download instead of the configured one}
+        {--force : Download the connector even when it is already installed}
         {--no-download : Only publish the configuration}';
 
-    protected $description = 'Install the Aviato agent next to your application';
+    protected $description = 'Install the Aviato connector next to your application';
 
     public function handle(Factory $http): int
     {
@@ -28,25 +29,25 @@ final class InstallCommand extends Command
             return self::SUCCESS;
         }
 
-        $config = (array) config('aviato.agent', []);
-        if (is_string($this->option('agent-version')) && $this->option('agent-version') !== '') {
-            $config['version'] = $this->option('agent-version');
+        $config = (array) array_replace((array) config('aviato.connector', []), (array) config('aviato.agent', []));
+        if (is_string(($this->option('connector-version') ?? $this->option('agent-version'))) && ($this->option('connector-version') ?? $this->option('agent-version')) !== '') {
+            $config['version'] = ($this->option('connector-version') ?? $this->option('agent-version'));
         }
         try {
-            $binary = AgentBinary::fromConfig($config);
+            $binary = ConnectorBinary::fromConfig($config);
         } catch (Throwable $exception) {
             $this->components->error($exception->getMessage());
 
             return self::FAILURE;
         }
         if ($binary->installed() && ! $this->option('force')) {
-            $this->components->info("The agent is already installed at {$binary->path} (use --force to download it again).");
+            $this->components->info("The connector is already installed at {$binary->path} (use --force to download it again).");
 
             return self::SUCCESS;
         }
 
         $url = $binary->downloadUrl();
-        $this->components->info("Downloading the Aviato agent {$binary->version} for {$binary->platform->os}-{$binary->platform->arch}…");
+        $this->components->info("Downloading the Aviato connector {$binary->version} for {$binary->platform->os}-{$binary->platform->arch}…");
         File::ensureDirectoryExists(dirname($binary->path));
         $temporary = $binary->path.'.download';
         try {
@@ -61,13 +62,13 @@ final class InstallCommand extends Command
             }
         } catch (Throwable $exception) {
             File::delete($temporary);
-            $this->components->error("Could not download the agent from {$url}: {$exception->getMessage()}");
+            $this->components->error("Could not download the connector from {$url}: {$exception->getMessage()}");
 
             return self::FAILURE;
         }
         File::move($temporary, $binary->path);
         File::chmod($binary->path, 0755);
-        $this->components->info("Installed the agent at {$binary->path}. Start it with `php artisan aviato:serve`.");
+        $this->components->info("Installed the connector at {$binary->path}. Start it with `php artisan aviato:serve`.");
 
         return self::SUCCESS;
     }

@@ -4,7 +4,7 @@ namespace Aviato\Laravel\Context;
 
 use Aviato\Plugin\V1\Caller as ProtoCaller;
 
-/** Who is calling and on what. Sent by the agent with every call. */
+/** Who is calling and on what. Sent by the connector with every call. */
 final readonly class Caller
 {
     public function __construct(
@@ -20,7 +20,7 @@ final readonly class Caller
         public string $requestId = '',
         /** Short-lived token for Data API calls made while handling this call. */
         public string $invocationToken = '',
-        /** Base URL of the agent's Data API. */
+        /** Base URL of the connector's Data API. */
         public string $dataUrl = '',
     ) {}
 
@@ -50,10 +50,10 @@ final readonly class Caller
             'role' => 'admin',
             'organizationId' => 'o_test',
             'projectId' => 'p_test',
-            'environment' => 'testing',
+            'environment' => 'test',
             'requestId' => 'r_test',
             'invocationToken' => 'test-token',
-            'dataUrl' => 'http://aviato-agent.test/data',
+            'dataUrl' => 'http://aviato-connector.test/data',
         ], $attributes));
     }
 

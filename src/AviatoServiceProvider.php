@@ -5,6 +5,7 @@ namespace Aviato\Laravel;
 use Aviato\Laravel\Console\InstallCommand;
 use Aviato\Laravel\Console\RelationsCommand;
 use Aviato\Laravel\Console\ServeCommand;
+use Aviato\Laravel\Console\TypesCommand;
 use Aviato\Laravel\Context\Caller;
 use Aviato\Laravel\Data\HttpDataClient;
 use Aviato\Laravel\Relations\EloquentRelationHints;
@@ -23,7 +24,7 @@ final class AviatoServiceProvider extends PackageServiceProvider
             ->name('aviato')
             ->hasConfigFile()
             ->hasRoute('aviato')
-            ->hasCommands([InstallCommand::class, ServeCommand::class, RelationsCommand::class]);
+            ->hasCommands([InstallCommand::class, ServeCommand::class, RelationsCommand::class, TypesCommand::class]);
     }
 
     public function packageRegistered(): void

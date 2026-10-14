@@ -2,7 +2,7 @@
 
 namespace Aviato\Laravel;
 
-/** Native UI v1 builders. Documents are validated by the agent and dashboard. */
+/** Native UI v1 builders. Documents are validated by the connector and dashboard. */
 final class UI
 {
     /** @return array{'$bind': string} */

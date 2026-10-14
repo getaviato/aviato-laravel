@@ -6,7 +6,7 @@ use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Str;
 
 /**
- * Files produced by actions, downloadable once by the agent. They live in a cache store so
+ * Files produced by actions, downloadable once by the connector. They live in a cache store so
  * any worker of the application can serve them.
  */
 final class FileStore

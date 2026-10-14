@@ -10,7 +10,7 @@ use Google\Protobuf\Internal\GPBUtil;
 use Google\Protobuf\RepeatedField;
 
 /**
- * An audited operation, emitted by the agent or the control plane.
+ * An audited operation, emitted by the connector or the control plane.
  * The JSON form of this message is the wire format of the audit ingest API.
  *
  * Generated from protobuf message <code>aviato.audit.v1.AuditEvent</code>

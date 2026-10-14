@@ -3,7 +3,7 @@
 namespace Aviato\Laravel\Data;
 
 /**
- * Reads and writes records through the agent, under the caller's permissions and audit trail.
+ * Reads and writes records through the connector, under the caller's permissions and audit trail.
  * Plugin code must use it instead of querying the database directly.
  */
 interface DataClient

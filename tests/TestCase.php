@@ -25,17 +25,19 @@ abstract class TestCase extends Orchestra
     protected function defineEnvironment($app): void
     {
         $app['config']->set('aviato.secret', self::SECRET);
+        // Do not inherit a config published by a previous Testbench run.
+        $app['config']->set('aviato.agent', []);
         $app['config']->set('cache.default', 'array');
     }
 
     /**
-     * Standard Webhooks headers for a body, signed like the agent does.
+     * Standard Webhooks headers for a body, signed like the connector does.
      *
      * @return array<string, string>
      */
-    public function signedHeaders(string $body, ?string $secret = null, ?int $timestamp = null): array
+    public function signedHeaders(string $body, ?string $secret = null, ?int $timestamp = null, ?string $id = null): array
     {
-        $id = 'msg_'.bin2hex(random_bytes(8));
+        $id ??= 'msg_'.bin2hex(random_bytes(8));
         $timestamp ??= time();
 
         return [

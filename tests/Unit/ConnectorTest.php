@@ -1,8 +1,8 @@
 <?php
 
-use Aviato\Laravel\Agent\AgentBinary;
-use Aviato\Laravel\Agent\DatabaseUrl;
-use Aviato\Laravel\Agent\Platform;
+use Aviato\Laravel\Connector\ConnectorBinary;
+use Aviato\Laravel\Connector\DatabaseUrl;
+use Aviato\Laravel\Connector\Platform;
 
 it('maps platforms to release asset names', function (string $family, string $machine, string $os, string $arch) {
     $platform = Platform::from($family, $machine);
@@ -16,10 +16,10 @@ it('maps platforms to release asset names', function (string $family, string $ma
 ]);
 
 it('expands the download URL template', function () {
-    $binary = AgentBinary::fromConfig(['version' => '2.0.0', 'download_url' => 'https://gh.test/download/agent-v{version}/aviato-agent-{os}-{arch}{ext}', 'checksum_url' => '{url}.sha256', 'path' => '/tmp/agent'], new Platform('windows', 'x64'));
+    $binary = ConnectorBinary::fromConfig(['version' => '2.0.0', 'download_url' => 'https://gh.test/download/connector-v{version}/aviato-connector-{os}-{arch}{ext}', 'checksum_url' => '{url}.sha256', 'path' => '/tmp/connector'], new Platform('windows', 'x64'));
 
-    expect($binary->downloadUrl())->toBe('https://gh.test/download/agent-v2.0.0/aviato-agent-windows-x64.exe')
-        ->and($binary->checksumUrl())->toBe('https://gh.test/download/agent-v2.0.0/aviato-agent-windows-x64.exe.sha256');
+    expect($binary->downloadUrl())->toBe('https://gh.test/download/connector-v2.0.0/aviato-connector-windows-x64.exe')
+        ->and($binary->checksumUrl())->toBe('https://gh.test/download/connector-v2.0.0/aviato-connector-windows-x64.exe.sha256');
 });
 
 it('builds database URLs from Laravel connections', function (array $connection, string $url) {

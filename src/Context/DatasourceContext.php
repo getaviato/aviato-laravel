@@ -8,7 +8,7 @@ final readonly class DatasourceContext
     public function __construct(
         /** The custom collection, as you declared it. */
         public string $collection,
-        /** Who the agent acts for; null for the agent's own calls (replication). */
+        /** Who the connector acts for; null for the connector's own calls (replication). */
         public ?Caller $caller = null,
     ) {}
 }

@@ -39,7 +39,7 @@ abstract class TargetContext extends Context
     }
 
     /**
-     * The records the action runs on, read through the agent: the selected records, or the
+     * The records the action runs on, read through the connector: the selected records, or the
      * records matching the current filter for global actions.
      *
      * @param  list<string>  $fields

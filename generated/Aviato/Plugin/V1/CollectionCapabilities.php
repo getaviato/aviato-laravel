@@ -10,7 +10,7 @@ use Google\Protobuf\Internal\GPBUtil;
 use Google\Protobuf\RepeatedField;
 
 /**
- * What the plugin evaluates itself. Anything else is evaluated by the agent in memory, over at
+ * What the plugin evaluates itself. Anything else is evaluated by the connector in memory, over at
  * most 2,000 records.
  *
  * Generated from protobuf message <code>aviato.plugin.v1.CollectionCapabilities</code>

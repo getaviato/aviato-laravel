@@ -10,7 +10,7 @@ use Google\Protobuf\Internal\GPBUtil;
 use Google\Protobuf\RepeatedField;
 
 /**
- * Ready-to-use read-only record integrations, executed on the customer agent.
+ * Ready-to-use read-only record integrations, executed on the customer connector.
  *
  * Generated from protobuf message <code>aviato.plugin.v1.WidgetDefinition</code>
  */
@@ -47,7 +47,7 @@ class WidgetDefinition extends \Google\Protobuf\Internal\Message
      */
     protected $binding_relation = '';
     /**
-     * Environment variable on the customer agent, never the credential itself.
+     * Environment variable on the customer connector, never the credential itself.
      *
      * Generated from protobuf field <code>string credential_env = 8 [json_name = "credentialEnv"];</code>
      */
@@ -80,7 +80,7 @@ class WidgetDefinition extends \Google\Protobuf\Internal\Message
      *           Local column containing the provider ID, optionally on a belongsTo relation.
      *     @type string $binding_relation
      *     @type string $credential_env
-     *           Environment variable on the customer agent, never the credential itself.
+     *           Environment variable on the customer connector, never the credential itself.
      *     @type bool $read_only
      *           Explicit operator confirmation that the credential has only read permissions.
      *     @type string $account
@@ -252,7 +252,7 @@ class WidgetDefinition extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Environment variable on the customer agent, never the credential itself.
+     * Environment variable on the customer connector, never the credential itself.
      *
      * Generated from protobuf field <code>string credential_env = 8 [json_name = "credentialEnv"];</code>
      * @return string
@@ -263,7 +263,7 @@ class WidgetDefinition extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Environment variable on the customer agent, never the credential itself.
+     * Environment variable on the customer connector, never the credential itself.
      *
      * Generated from protobuf field <code>string credential_env = 8 [json_name = "credentialEnv"];</code>
      * @param string $var

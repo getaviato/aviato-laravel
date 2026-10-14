@@ -17,7 +17,7 @@ final class SearchDefinition
 
     public function __construct(public readonly string $collection) {}
 
-    /** Replaces the agent's search entirely instead of adding to it. */
+    /** Replaces the connector's search entirely instead of adding to it. */
     public function replace(bool $replace = true): self
     {
         $this->replace = $replace;

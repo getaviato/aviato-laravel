@@ -54,7 +54,7 @@ final class DatasourceService
         $class = self::METHODS[$method] ?? throw new RpcException('unimplemented', "Unknown method aviato.plugin.v1.DatasourceService/{$method}");
         $request = new $class;
         try {
-            // Unknown fields are ignored so newer agents can talk to older SDKs.
+            // Unknown fields are ignored so newer connectors can talk to older SDKs.
             $request->mergeFromJsonString(trim($body) === '' ? '{}' : $body, true);
         } catch (Throwable $exception) {
             throw RpcException::invalidArgument("Invalid {$method} request: {$exception->getMessage()}");
@@ -126,7 +126,7 @@ final class DatasourceService
         ]);
     }
 
-    /** The caller, or null for the agent's own calls (no user and no request). */
+    /** The caller, or null for the connector's own calls (no user and no request). */
     private function caller(?ProtoCaller $caller): ?Caller
     {
         if ($caller === null || ($caller->getUserId() === '' && $caller->getRequestId() === '')) {

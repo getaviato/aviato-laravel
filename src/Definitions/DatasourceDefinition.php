@@ -6,7 +6,7 @@ use Closure;
 
 /**
  * Collections your code serves itself: an internal API, a SaaS (Stripe, HubSpot), a file. The
- * agent applies roles, row scopes, field masking and the audit trail as for its databases.
+ * connector applies roles, row scopes, field masking and the audit trail as for its databases.
  *
  *     Aviato::datasource()
  *         ->collection('tickets', fn (CustomCollectionDefinition $collection) => $collection
@@ -62,7 +62,7 @@ final class DatasourceDefinition
         return $this;
     }
 
-    /** The agent copies the collections with `listChanges` and serves reads from its copy. */
+    /** The connector copies the collections with `listChanges` and serves reads from its copy. */
     public function replication(): self
     {
         $this->strategy = 'replication';

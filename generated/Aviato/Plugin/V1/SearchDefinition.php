@@ -19,7 +19,7 @@ class SearchDefinition extends \Google\Protobuf\Internal\Message
      */
     protected $collection = '';
     /**
-     * When true the SDK replaces the agent's search entirely.
+     * When true the SDK replaces the connector's search entirely.
      *
      * Generated from protobuf field <code>bool replace = 2 [json_name = "replace"];</code>
      */
@@ -33,7 +33,7 @@ class SearchDefinition extends \Google\Protobuf\Internal\Message
      *
      *     @type string $collection
      *     @type bool $replace
-     *           When true the SDK replaces the agent's search entirely.
+     *           When true the SDK replaces the connector's search entirely.
      * }
      */
     public function __construct($data = null)
@@ -65,7 +65,7 @@ class SearchDefinition extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * When true the SDK replaces the agent's search entirely.
+     * When true the SDK replaces the connector's search entirely.
      *
      * Generated from protobuf field <code>bool replace = 2 [json_name = "replace"];</code>
      * @return bool
@@ -76,7 +76,7 @@ class SearchDefinition extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * When true the SDK replaces the agent's search entirely.
+     * When true the SDK replaces the connector's search entirely.
      *
      * Generated from protobuf field <code>bool replace = 2 [json_name = "replace"];</code>
      * @param bool $var

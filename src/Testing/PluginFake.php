@@ -11,7 +11,7 @@ use Aviato\Laravel\Enums\HookTiming;
 use Aviato\Laravel\Plugin;
 
 /**
- * Calls your plugin's handlers in tests, without an agent: with a fake caller, and with the
+ * Calls your plugin's handlers in tests, without a connector: with a fake caller, and with the
  * Data API replaced by an in-memory {@see FakeDataClient}.
  *
  *     Aviato::fake()
@@ -134,7 +134,7 @@ final class PluginFake
     }
 
     /**
-     * Lists the records of a custom collection as the agent does (translation strategy).
+     * Lists the records of a custom collection as the connector does (translation strategy).
      *
      * @param  array<string, mixed>|null  $filter
      * @param  list<string>  $fields
@@ -179,7 +179,7 @@ final class PluginFake
     }
 
     /**
-     * The changes of a replicated collection since `$cursor`, as the agent pulls them (without a
+     * The changes of a replicated collection since `$cursor`, as the connector pulls them (without a
      * caller).
      *
      * @return array{records: list<array<string, mixed>>, deletedIds: list<string>, nextCursor: string, hasMore: bool}
@@ -189,7 +189,7 @@ final class PluginFake
         return $this->plugin->datasources()->listChanges($collection, $cursor);
     }
 
-    /** @return list<array<string, mixed>> The custom collections as the agent receives them (JSON). */
+    /** @return list<array<string, mixed>> The custom collections as the connector receives them (JSON). */
     public function customCollections(): array
     {
         /** @var array{collections?: list<array<string, mixed>>} $described */
@@ -198,7 +198,7 @@ final class PluginFake
         return $described['collections'] ?? [];
     }
 
-    /** @return array<string, mixed> The manifest as the agent receives it (JSON). */
+    /** @return array<string, mixed> The manifest as the connector receives it (JSON). */
     public function manifest(): array
     {
         /** @var array<string, mixed> */

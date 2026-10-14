@@ -71,11 +71,18 @@ class Manifest extends \Google\Protobuf\Internal\Message
      */
     private $summaries;
     /**
-     * Customer-agent integrations. Credential values must never appear in the manifest.
+     * Customer-connector integrations. Credential values must never appear in the manifest.
      *
      * Generated from protobuf field <code>repeated .aviato.plugin.v1.WidgetDefinition widgets = 14 [json_name = "widgets"];</code>
      */
     private $widgets;
+    /**
+     * Declarative collection layouts. A declared layout replaces the dashboard-stored one for its
+     * collection.
+     *
+     * Generated from protobuf field <code>repeated .aviato.plugin.v1.LayoutDefinition layouts = 15 [json_name = "layouts"];</code>
+     */
+    private $layouts;
 
     /**
      * Constructor.
@@ -99,7 +106,10 @@ class Manifest extends \Google\Protobuf\Internal\Message
      *     @type \Aviato\Plugin\V1\SummaryDefinition[] $summaries
      *           Declarative record summaries. No executable code or external assets.
      *     @type \Aviato\Plugin\V1\WidgetDefinition[] $widgets
-     *           Customer-agent integrations. Credential values must never appear in the manifest.
+     *           Customer-connector integrations. Credential values must never appear in the manifest.
+     *     @type \Aviato\Plugin\V1\LayoutDefinition[] $layouts
+     *           Declarative collection layouts. A declared layout replaces the dashboard-stored one for its
+     *           collection.
      * }
      */
     public function __construct($data = null)
@@ -402,7 +412,7 @@ class Manifest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Customer-agent integrations. Credential values must never appear in the manifest.
+     * Customer-connector integrations. Credential values must never appear in the manifest.
      *
      * Generated from protobuf field <code>repeated .aviato.plugin.v1.WidgetDefinition widgets = 14 [json_name = "widgets"];</code>
      * @return RepeatedField<\Aviato\Plugin\V1\WidgetDefinition>
@@ -413,7 +423,7 @@ class Manifest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Customer-agent integrations. Credential values must never appear in the manifest.
+     * Customer-connector integrations. Credential values must never appear in the manifest.
      *
      * Generated from protobuf field <code>repeated .aviato.plugin.v1.WidgetDefinition widgets = 14 [json_name = "widgets"];</code>
      * @param \Aviato\Plugin\V1\WidgetDefinition[] $var
@@ -423,6 +433,34 @@ class Manifest extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Aviato\Plugin\V1\WidgetDefinition::class);
         $this->widgets = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Declarative collection layouts. A declared layout replaces the dashboard-stored one for its
+     * collection.
+     *
+     * Generated from protobuf field <code>repeated .aviato.plugin.v1.LayoutDefinition layouts = 15 [json_name = "layouts"];</code>
+     * @return RepeatedField<\Aviato\Plugin\V1\LayoutDefinition>
+     */
+    public function getLayouts()
+    {
+        return $this->layouts;
+    }
+
+    /**
+     * Declarative collection layouts. A declared layout replaces the dashboard-stored one for its
+     * collection.
+     *
+     * Generated from protobuf field <code>repeated .aviato.plugin.v1.LayoutDefinition layouts = 15 [json_name = "layouts"];</code>
+     * @param \Aviato\Plugin\V1\LayoutDefinition[] $var
+     * @return $this
+     */
+    public function setLayouts(array|RepeatedField $var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Aviato\Plugin\V1\LayoutDefinition::class);
+        $this->layouts = $arr;
 
         return $this;
     }

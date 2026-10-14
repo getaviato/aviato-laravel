@@ -6,12 +6,12 @@ use Aviato\Laravel\Definitions\RelationHint;
 use Aviato\Laravel\Plugin;
 use Illuminate\Console\Command;
 
-/** Lists the relation hints the plugin sends to the agent. */
+/** Lists the relation hints the plugin sends to the connector. */
 final class RelationsCommand extends Command
 {
     protected $signature = 'aviato:relations {--json : Output the hints as JSON}';
 
-    protected $description = 'List the Eloquent relations sent to the Aviato agent as relation hints';
+    protected $description = 'List the Eloquent relations sent to the Aviato connector as relation hints';
 
     public function handle(Plugin $plugin): int
     {

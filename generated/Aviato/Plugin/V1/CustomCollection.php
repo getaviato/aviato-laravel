@@ -46,7 +46,7 @@ class CustomCollection extends \Google\Protobuf\Internal\Message
     protected $strategy = 0;
     /**
      * Replication: seconds between two ListChanges pulls (0: on demand only, through the
-     * agent's /plugin-data/replicas/{collection}/refresh endpoint).
+     * connector's /plugin-data/replicas/{collection}/refresh endpoint).
      *
      * Generated from protobuf field <code>uint32 replication_interval_seconds = 7 [json_name = "replicationIntervalSeconds"];</code>
      */
@@ -69,7 +69,7 @@ class CustomCollection extends \Google\Protobuf\Internal\Message
      *     @type int $strategy
      *     @type int $replication_interval_seconds
      *           Replication: seconds between two ListChanges pulls (0: on demand only, through the
-     *           agent's /plugin-data/replicas/{collection}/refresh endpoint).
+     *           connector's /plugin-data/replicas/{collection}/refresh endpoint).
      * }
      */
     public function __construct($data = null)
@@ -233,7 +233,7 @@ class CustomCollection extends \Google\Protobuf\Internal\Message
 
     /**
      * Replication: seconds between two ListChanges pulls (0: on demand only, through the
-     * agent's /plugin-data/replicas/{collection}/refresh endpoint).
+     * connector's /plugin-data/replicas/{collection}/refresh endpoint).
      *
      * Generated from protobuf field <code>uint32 replication_interval_seconds = 7 [json_name = "replicationIntervalSeconds"];</code>
      * @return int
@@ -245,7 +245,7 @@ class CustomCollection extends \Google\Protobuf\Internal\Message
 
     /**
      * Replication: seconds between two ListChanges pulls (0: on demand only, through the
-     * agent's /plugin-data/replicas/{collection}/refresh endpoint).
+     * connector's /plugin-data/replicas/{collection}/refresh endpoint).
      *
      * Generated from protobuf field <code>uint32 replication_interval_seconds = 7 [json_name = "replicationIntervalSeconds"];</code>
      * @param int $var

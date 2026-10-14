@@ -33,7 +33,7 @@ class ListChangesResponse extends \Google\Protobuf\Internal\Message
      */
     protected $next_cursor = '';
     /**
-     * True when more changes are waiting: the agent calls again right away.
+     * True when more changes are waiting: the connector calls again right away.
      *
      * Generated from protobuf field <code>bool has_more = 4 [json_name = "hasMore"];</code>
      */
@@ -52,7 +52,7 @@ class ListChangesResponse extends \Google\Protobuf\Internal\Message
      *     @type string $next_cursor
      *           Cursor of the next call.
      *     @type bool $has_more
-     *           True when more changes are waiting: the agent calls again right away.
+     *           True when more changes are waiting: the connector calls again right away.
      * }
      */
     public function __construct($data = null)
@@ -140,7 +140,7 @@ class ListChangesResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * True when more changes are waiting: the agent calls again right away.
+     * True when more changes are waiting: the connector calls again right away.
      *
      * Generated from protobuf field <code>bool has_more = 4 [json_name = "hasMore"];</code>
      * @return bool
@@ -151,7 +151,7 @@ class ListChangesResponse extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * True when more changes are waiting: the agent calls again right away.
+     * True when more changes are waiting: the connector calls again right away.
      *
      * Generated from protobuf field <code>bool has_more = 4 [json_name = "hasMore"];</code>
      * @param bool $var

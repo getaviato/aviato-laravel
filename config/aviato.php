@@ -7,8 +7,8 @@ return [
     | Plugin secret
     |--------------------------------------------------------------------------
     |
-    | Shared with the Aviato agent, in the Standard Webhooks format (whsec_…).
-    | Every request the agent sends to this application is signed with it and
+    | Shared with the Aviato connector, in the Standard Webhooks format (whsec_…).
+    | Every request the connector sends to this application is signed with it and
     | requests with a missing, invalid or stale signature are rejected.
     |
     */
@@ -22,7 +22,7 @@ return [
     |
     | The plugin endpoints are mounted under this path, outside the `web`
     | middleware group (no session, no CSRF). `plugin_url` is the public URL
-    | of those endpoints as the agent reaches them; it defaults to APP_URL
+    | of those endpoints as the connector reaches them; it defaults to APP_URL
     | followed by the base path.
     |
     */
@@ -38,7 +38,7 @@ return [
     | One-time file downloads
     |--------------------------------------------------------------------------
     |
-    | Files produced by actions are kept in this cache store until the agent
+    | Files produced by actions are kept in this cache store until the connector
     | downloads them once, or until they expire (seconds). Use a store shared
     | by every worker of the application (file, database, redis…).
     |
@@ -54,7 +54,7 @@ return [
     | Relation hints
     |--------------------------------------------------------------------------
     |
-    | Relations declared on these Eloquent models are sent to the agent, which
+    | Relations declared on these Eloquent models are sent to the connector, which
     | uses them next to the foreign keys it finds in the database. Leave
     | `models` empty to discover the models in app/Models.
     |
@@ -67,28 +67,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Agent
+    | Connector
     |--------------------------------------------------------------------------
     |
-    | `php artisan aviato:install` downloads the agent binary for the current
+    | `php artisan aviato:install` downloads the connector binary for the current
     | platform from `download_url` ({version}, {os}, {arch} and {ext} are
     | replaced) and `php artisan aviato:serve` runs it next to your app.
     |
     */
 
-    'agent' => [
-        'version' => env('AVIATO_AGENT_VERSION', '0.1.0'),
-        'download_url' => env('AVIATO_AGENT_DOWNLOAD_URL', 'https://github.com/codeforge-tech/aviato/releases/download/agent-v{version}/aviato-agent-{os}-{arch}{ext}'),
+    'connector' => [
+        'version' => env('AVIATO_CONNECTOR_VERSION', env('AVIATO_AGENT_VERSION', '0.1.0')),
+        'download_url' => env('AVIATO_CONNECTOR_DOWNLOAD_URL', env('AVIATO_AGENT_DOWNLOAD_URL', 'https://github.com/getaviato/aviato/releases/download/connector-v{version}/aviato-connector-{os}-{arch}{ext}')),
         // Optional: a URL returning the SHA-256 of the binary (same placeholders plus {url}).
-        'checksum_url' => env('AVIATO_AGENT_CHECKSUM_URL'),
-        'path' => env('AVIATO_AGENT_PATH'),
+        'checksum_url' => env('AVIATO_CONNECTOR_CHECKSUM_URL', env('AVIATO_AGENT_CHECKSUM_URL')),
+        'path' => env('AVIATO_CONNECTOR_PATH', env('AVIATO_AGENT_PATH')),
         'data_dir' => env('AVIATO_DATA_DIR'),
         'control_plane_url' => env('AVIATO_CONTROL_PLANE_URL'),
-        'token' => env('AVIATO_AGENT_TOKEN'),
+        'token' => env('AVIATO_CONNECTOR_TOKEN', env('AVIATO_AGENT_TOKEN')),
         // Defaults to a URL built from the connection below (the default connection when null).
         'database_url' => env('AVIATO_DATABASE_URL'),
         'connection' => env('AVIATO_DB_CONNECTION'),
-        // Extra environment variables passed to the agent.
+        // Extra environment variables passed to the connector.
         'env' => [],
     ],
 

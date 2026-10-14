@@ -79,7 +79,7 @@ final class CustomCollectionDefinition
     }
 
     /**
-     * What the list handler does itself. The agent evaluates everything else in memory, over at
+     * What the list handler does itself. The connector evaluates everything else in memory, over at
      * most 2,000 records, and always checks the records you return against the caller's
      * permissions.
      *
@@ -103,7 +103,7 @@ final class CustomCollectionDefinition
     }
 
     /**
-     * The agent copies the collection with the `listChanges` handler and serves reads from its
+     * The connector copies the collection with the `listChanges` handler and serves reads from its
      * copy, pulling changes every `$intervalSeconds` (0: only when asked, see
      * `Aviato::refreshReplica()`).
      */

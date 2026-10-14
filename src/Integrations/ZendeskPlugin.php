@@ -4,7 +4,7 @@ namespace Aviato\Laravel\Integrations;
 
 use InvalidArgumentException;
 
-/** Agent-local OAuth integration. The agent verifies read-only scopes before loading data. */
+/** Connector-local OAuth integration. The connector verifies read-only scopes before loading data. */
 final class ZendeskPlugin implements IntegrationPlugin
 {
     /** @var array<string, IntegrationWidget> */

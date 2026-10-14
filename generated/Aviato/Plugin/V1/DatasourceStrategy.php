@@ -23,7 +23,7 @@ class DatasourceStrategy
      */
     const DATASOURCE_STRATEGY_TRANSLATION = 1;
     /**
-     * The agent copies the collection into a local SQLite database with ListChanges and serves
+     * The connector copies the collection into a local SQLite database with ListChanges and serves
      * reads from it; writes still go to the plugin.
      *
      * Generated from protobuf enum <code>DATASOURCE_STRATEGY_REPLICATION = 2;</code>

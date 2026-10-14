@@ -56,7 +56,7 @@ final class ComputedFieldDefinition
         return $this;
     }
 
-    /** Lets the agent sort and filter on the field by computing it in memory (bounded). */
+    /** Lets the connector sort and filter on the field by computing it in memory (bounded). */
     public function emulateFilterSort(bool $emulate = true): self
     {
         $this->emulateFilterSort = $emulate;

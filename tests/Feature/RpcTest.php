@@ -12,7 +12,7 @@ beforeEach(fn () => FixturePlugin::register());
 dataset('caller', [[[
     'userId' => 'u1', 'name' => 'Ada', 'actorType' => 'human', 'role' => 'admin', 'organizationId' => 'o1',
     'projectId' => 'p1', 'environment' => 'production', 'requestId' => 'r1', 'invocationToken' => 'tok_123',
-    'dataUrl' => 'http://agent.test/data',
+    'dataUrl' => 'http://connector.test/data',
 ]]]);
 
 it('serves the manifest', function () {
@@ -95,7 +95,7 @@ it('rejects malformed requests', function () {
         ->assertStatus(400)->assertJsonPath('code', 'invalid_argument');
 });
 
-it('ignores unknown fields from newer agents', function (array $caller) {
+it('ignores unknown fields from newer connectors', function (array $caller) {
     $this->rpc('ExecuteAction', ['caller' => [...$caller, 'futureField' => 1], 'action' => 'Summary', 'target' => ['collection' => 'customers', 'recordIds' => ['7']], 'somethingNew' => true])
         ->assertOk();
 })->with('caller');
@@ -184,8 +184,8 @@ it('computes charts', function (array $caller) {
 
 it('reads records through the Data API with the invocation token', function (array $caller) {
     Http::fake([
-        'agent.test/data/aviato.plugin.v1.DataService/Get' => fn (Request $request) => Http::response(['record' => ['id' => $request['id'], 'email' => "c{$request['id']}@example.com"]]),
-        'agent.test/data/aviato.plugin.v1.DataService/List' => Http::response(['records' => [['id' => 9, 'email' => 'c9@example.com']], 'total' => '1']),
+        'connector.test/data/aviato.plugin.v1.DataService/Get' => fn (Request $request) => Http::response(['record' => ['id' => $request['id'], 'email' => "c{$request['id']}@example.com"]]),
+        'connector.test/data/aviato.plugin.v1.DataService/List' => Http::response(['records' => [['id' => 9, 'email' => 'c9@example.com']], 'total' => '1']),
     ]);
     Aviato::action('customers', 'Emails')->bulk()->execute(fn (ActionContext $context) => $context->success(implode(',', array_column($context->records(), 'email'))));
 
@@ -195,7 +195,7 @@ it('reads records through the Data API with the invocation token', function (arr
         ->assertJsonPath('result.success.message', 'c9@example.com');
 
     Http::assertSent(fn (Request $request) => $request->hasHeader('Authorization', 'Bearer tok_123')
-        && $request->url() === 'http://agent.test/data/aviato.plugin.v1.DataService/List'
+        && $request->url() === 'http://connector.test/data/aviato.plugin.v1.DataService/List'
         && $request['collection'] === 'customers' && $request['filter'] === ['plan' => 'team'] && $request['limit'] === 200);
 })->with('caller');
 

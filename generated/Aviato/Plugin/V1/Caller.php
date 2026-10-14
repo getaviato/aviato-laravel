@@ -59,7 +59,7 @@ class Caller extends \Google\Protobuf\Internal\Message
      */
     protected $invocation_token = '';
     /**
-     * Base URL of the agent's DataService.
+     * Base URL of the connector's DataService.
      *
      * Generated from protobuf field <code>string data_url = 10 [json_name = "dataUrl"];</code>
      */
@@ -84,7 +84,7 @@ class Caller extends \Google\Protobuf\Internal\Message
      *     @type string $invocation_token
      *           Short-lived token for DataService calls made while handling this call.
      *     @type string $data_url
-     *           Base URL of the agent's DataService.
+     *           Base URL of the connector's DataService.
      * }
      */
     public function __construct($data = null)
@@ -304,7 +304,7 @@ class Caller extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Base URL of the agent's DataService.
+     * Base URL of the connector's DataService.
      *
      * Generated from protobuf field <code>string data_url = 10 [json_name = "dataUrl"];</code>
      * @return string
@@ -315,7 +315,7 @@ class Caller extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Base URL of the agent's DataService.
+     * Base URL of the connector's DataService.
      *
      * Generated from protobuf field <code>string data_url = 10 [json_name = "dataUrl"];</code>
      * @param string $var

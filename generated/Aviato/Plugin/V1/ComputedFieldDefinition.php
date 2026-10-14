@@ -35,7 +35,7 @@ class ComputedFieldDefinition extends \Google\Protobuf\Internal\Message
      */
     private $dependencies;
     /**
-     * When true the agent may sort and filter on the field by computing it in memory, within
+     * When true the connector may sort and filter on the field by computing it in memory, within
      * a bounded number of records.
      *
      * Generated from protobuf field <code>bool emulate_filter_sort = 5 [json_name = "emulateFilterSort"];</code>
@@ -59,7 +59,7 @@ class ComputedFieldDefinition extends \Google\Protobuf\Internal\Message
      *     @type string[] $dependencies
      *           Fields to load on each record before computing.
      *     @type bool $emulate_filter_sort
-     *           When true the agent may sort and filter on the field by computing it in memory, within
+     *           When true the connector may sort and filter on the field by computing it in memory, within
      *           a bounded number of records.
      *     @type string[] $enum_values
      * }
@@ -167,7 +167,7 @@ class ComputedFieldDefinition extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * When true the agent may sort and filter on the field by computing it in memory, within
+     * When true the connector may sort and filter on the field by computing it in memory, within
      * a bounded number of records.
      *
      * Generated from protobuf field <code>bool emulate_filter_sort = 5 [json_name = "emulateFilterSort"];</code>
@@ -179,7 +179,7 @@ class ComputedFieldDefinition extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * When true the agent may sort and filter on the field by computing it in memory, within
+     * When true the connector may sort and filter on the field by computing it in memory, within
      * a bounded number of records.
      *
      * Generated from protobuf field <code>bool emulate_filter_sort = 5 [json_name = "emulateFilterSort"];</code>

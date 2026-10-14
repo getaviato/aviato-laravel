@@ -5,7 +5,7 @@ namespace Aviato\Laravel\Definitions;
 use Aviato\Plugin\V1\RelationHint as ProtoRelationHint;
 
 /**
- * A relation the agent cannot infer from foreign keys alone. `foreignKey` always holds the
+ * A relation the connector cannot infer from foreign keys alone. `foreignKey` always holds the
  * foreign key columns and `targetKey` the columns they reference, whichever side the relation
  * is declared on.
  */

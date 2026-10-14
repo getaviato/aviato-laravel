@@ -19,7 +19,7 @@ use Google\Protobuf\Internal\Message;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Factory;
 
-/** The agent's DataService, called with ConnectRPC's JSON encoding and the invocation token. */
+/** The connector's DataService, called with ConnectRPC's JSON encoding and the invocation token. */
 final class HttpDataClient implements DataClient
 {
     public function __construct(private readonly Factory $http, private readonly Caller $caller) {}
@@ -79,7 +79,7 @@ final class HttpDataClient implements DataClient
     private function call(string $method, Message $request, Message $response): Message
     {
         if ($this->caller->dataUrl === '') {
-            throw RpcException::failedPrecondition('The call has no Data API URL; records are only available while the agent calls the plugin.');
+            throw RpcException::failedPrecondition('The call has no Data API URL; records are only available while the connector calls the plugin.');
         }
         $url = rtrim($this->caller->dataUrl, '/').'/aviato.plugin.v1.DataService/'.$method;
         try {
@@ -89,7 +89,7 @@ final class HttpDataClient implements DataClient
                 ->withBody($request->serializeToJsonString(), 'application/json')
                 ->post($url);
         } catch (ConnectionException $exception) {
-            throw new RpcException('unavailable', "The agent's Data API is unreachable: {$exception->getMessage()}", $exception);
+            throw new RpcException('unavailable', "The connector's Data API is unreachable: {$exception->getMessage()}", $exception);
         }
         if (! $result->successful()) {
             $error = $result->json();

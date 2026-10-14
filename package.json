@@ -1,6 +1,6 @@
 {
     "name": "@aviato/sdk-laravel",
-    "version": "0.3.0",
+    "version": "0.6.0",
     "private": true,
     "description": "Laravel SDK for Aviato plugins (Composer package getaviato/laravel).",
     "devDependencies": {
@@ -38,7 +38,8 @@
                 ],
                 "inputs": [
                     "default",
-                    "{workspaceRoot}/packages/protocol/fixtures/ui*.json"
+                    "{workspaceRoot}/packages/protocol/fixtures/ui*.json",
+                    "{workspaceRoot}/packages/protocol/fixtures/layout*.json"
                 ]
             },
             "lint": {

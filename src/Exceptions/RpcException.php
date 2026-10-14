@@ -6,7 +6,7 @@ use RuntimeException;
 use Throwable;
 
 /**
- * A ConnectRPC error. Throw it from a handler to answer the agent with a specific error code;
+ * A ConnectRPC error. Throw it from a handler to answer the connector with a specific error code;
  * any other exception becomes an `internal` error.
  */
 class RpcException extends RuntimeException

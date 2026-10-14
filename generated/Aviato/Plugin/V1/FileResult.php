@@ -15,7 +15,7 @@ use Google\Protobuf\RepeatedField;
 class FileResult extends \Google\Protobuf\Internal\Message
 {
     /**
-     * One-time reference; the agent streams the file from GET /plugin/files/{ref} on the SDK.
+     * One-time reference; the connector streams the file from GET /plugin/files/{ref} on the SDK.
      *
      * Generated from protobuf field <code>string ref = 1 [json_name = "ref"];</code>
      */
@@ -36,7 +36,7 @@ class FileResult extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $ref
-     *           One-time reference; the agent streams the file from GET /plugin/files/{ref} on the SDK.
+     *           One-time reference; the connector streams the file from GET /plugin/files/{ref} on the SDK.
      *     @type string $name
      *     @type string $mime_type
      * }
@@ -48,7 +48,7 @@ class FileResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * One-time reference; the agent streams the file from GET /plugin/files/{ref} on the SDK.
+     * One-time reference; the connector streams the file from GET /plugin/files/{ref} on the SDK.
      *
      * Generated from protobuf field <code>string ref = 1 [json_name = "ref"];</code>
      * @return string
@@ -59,7 +59,7 @@ class FileResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * One-time reference; the agent streams the file from GET /plugin/files/{ref} on the SDK.
+     * One-time reference; the connector streams the file from GET /plugin/files/{ref} on the SDK.
      *
      * Generated from protobuf field <code>string ref = 1 [json_name = "ref"];</code>
      * @param string $var

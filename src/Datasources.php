@@ -242,7 +242,7 @@ final class Datasources
     }
 
     /**
-     * The record id the agent uses (`a|b` for composite keys).
+     * The record id the connector uses (`a|b` for composite keys).
      *
      * @param  array<string, mixed>  $record
      * @param  list<string>  $primaryKey

@@ -54,6 +54,12 @@ final class FakeDataClient implements DataClient
         return ['records' => $page, 'total' => count($records)];
     }
 
+    /** @return list<array<string, mixed>> */
+    public function records(string $collection): array
+    {
+        return array_values($this->records[$collection] ?? []);
+    }
+
     public function get(string $collection, string $id): ?array
     {
         return $this->records[$collection][$id] ?? null;
@@ -62,7 +68,7 @@ final class FakeDataClient implements DataClient
     public function create(string $collection, array $values): array
     {
         $key = $this->primaryKey($collection);
-        $values[$key] ??= (string) $this->nextId++;
+        $values[$key] ??= 'fake_'.$this->nextId++;
         $this->records[$collection][$this->idOf($collection, $values)] = $values;
         $this->writes[] = ['operation' => 'create', 'collection' => $collection, 'id' => $this->idOf($collection, $values), 'values' => $values];
 

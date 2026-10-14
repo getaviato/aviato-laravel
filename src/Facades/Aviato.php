@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static \Aviato\Laravel\Plugin use(\Aviato\Laravel\Integrations\IntegrationPlugin $integration)
  * @method static \Aviato\Laravel\Plugin summary(string $collection, array<string, mixed> $document)
+ * @method static \Aviato\Laravel\Plugin layout(string $collection, array<string, mixed> $layout)
  * @method static \Aviato\Laravel\Definitions\ActionDefinition action(string $collection, string $name)
  * @method static \Aviato\Laravel\Definitions\ComputedFieldDefinition computedField(string $collection, string $name)
  * @method static \Aviato\Laravel\Definitions\HookDefinition hook(string $collection, \Aviato\Laravel\Enums\HookTiming|string $timing, \Aviato\Laravel\Enums\HookOperation|string $operation)
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Facade;
 final class Aviato extends Facade
 {
     /**
-     * Lets you call your plugin's handlers in tests, without an agent, with a fake caller and an
+     * Lets you call your plugin's handlers in tests, without a connector, with a fake caller and an
      * in-memory Data API.
      */
     public static function fake(): PluginFake

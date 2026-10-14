@@ -26,11 +26,13 @@ use Aviato\Laravel\Exceptions\InvalidDefinitionException;
 use Aviato\Laravel\Exceptions\RpcException;
 use Aviato\Laravel\Integrations\IntegrationPlugin;
 use Aviato\Laravel\Integrations\IntegrationWidget;
+use Aviato\Laravel\Support\Signing;
 use Aviato\Laravel\Support\Structs;
 use Aviato\Plugin\V1\ActionDefinition as ProtoActionDefinition;
 use Aviato\Plugin\V1\ChartDefinition as ProtoChartDefinition;
 use Aviato\Plugin\V1\ComputedFieldDefinition as ProtoComputedFieldDefinition;
 use Aviato\Plugin\V1\HookDefinition as ProtoHookDefinition;
+use Aviato\Plugin\V1\LayoutDefinition;
 use Aviato\Plugin\V1\Manifest;
 use Aviato\Plugin\V1\SearchDefinition as ProtoSearchDefinition;
 use Aviato\Plugin\V1\SegmentDefinition as ProtoSegmentDefinition;
@@ -44,7 +46,7 @@ use Illuminate\Support\Str;
 use StandardWebhooks\Webhook;
 
 /**
- * Extends an Aviato agent with actions, computed fields, hooks, segments, search, charts and
+ * Extends an Aviato connector with actions, computed fields, hooks, segments, search, charts and
  * custom datasources.
  * Use it through the `Aviato` facade, usually from a service provider's `boot` method.
  */
@@ -54,7 +56,7 @@ class Plugin
 
     public const SDK_NAME = 'getaviato/laravel';
 
-    public const SDK_VERSION = '0.3.0';
+    public const SDK_VERSION = '0.6.0';
 
     /** @var array<string, ActionDefinition> */
     private array $actions = [];
@@ -79,6 +81,9 @@ class Plugin
 
     /** @var array<string, array<string, mixed>> */
     private array $summaries = [];
+
+    /** @var array<string, array<string, mixed>> */
+    private array $layouts = [];
 
     /** @var array<string, WidgetDefinition> */
     private array $widgets = [];
@@ -108,6 +113,21 @@ class Plugin
     public function summary(string $collection, array $document): self
     {
         $this->summaries[$collection] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Declares how a collection looks in the back-office: label, icon, fieldOrder, fields (label,
+     * description, hidden, readOnly, widget, currency), searchFields, defaultSort and relations. It
+     * replaces the layout edited in the dashboard, which then shows it read-only. Registering a
+     * collection again replaces its layout; the connector ignores an invalid one.
+     *
+     * @param  array<string, mixed>  $layout
+     */
+    public function layout(string $collection, array $layout): self
+    {
+        $this->layouts[$collection] = $layout;
 
         return $this;
     }
@@ -181,13 +201,13 @@ class Plugin
     }
 
     /**
-     * Asks the agent to pull the changes of a replicated collection now, for example from a
-     * webhook of the source. `$dataUrl` is the agent's Data API (`Caller::$dataUrl`,
-     * `<agent URL>/plugin-data`). The request is signed with the plugin secret.
+     * Asks the connector to pull the changes of a replicated collection now, for example from a
+     * webhook of the source. `$dataUrl` is the connector's Data API (`Caller::$dataUrl`,
+     * `<connector URL>/plugin-data`). The request is signed with the plugin secret.
      *
      * @return array{collection: string, upserted: int, deleted: int, cursor: string}
      *
-     * @throws RequestException when the agent answers with an error.
+     * @throws RequestException when the connector answers with an error.
      */
     public function refreshReplica(string $collection, string $dataUrl): array
     {
@@ -196,7 +216,9 @@ class Plugin
             throw new InvalidDefinitionException('The Aviato plugin secret is not configured (AVIATO_PLUGIN_SECRET).');
         }
         $body = '{}';
-        $id = 'msg_'.Str::uuid();
+        $path = 'replicas/'.rawurlencode($collection).'/refresh';
+        // Bound to this endpoint, so the connector cannot be handed this request as another one.
+        $id = Signing::boundMessageId((string) Str::uuid(), 'POST', $path);
         $timestamp = time();
         $response = Http::withHeaders([
             'webhook-id' => $id,
@@ -205,7 +227,7 @@ class Plugin
         ])
             ->accept('application/json')
             ->withBody($body, 'application/json')
-            ->post(rtrim($dataUrl, '/').'/replicas/'.rawurlencode($collection).'/refresh')
+            ->post(rtrim($dataUrl, '/').'/'.$path)
             ->throw();
         $result = $response->json();
 
@@ -263,6 +285,10 @@ class Plugin
                 'collection' => $collection,
                 'document' => Structs::fromArray($this->summaries[$collection]),
             ]), array_keys($this->summaries)),
+            'layouts' => array_map(fn (string $collection): LayoutDefinition => new LayoutDefinition([
+                'collection' => $collection,
+                'layout' => Structs::fromArray($this->layouts[$collection]),
+            ]), array_keys($this->layouts)),
             'protocol_version' => self::PROTOCOL_VERSION,
             'sdk_name' => self::SDK_NAME,
             'sdk_version' => self::SDK_VERSION,

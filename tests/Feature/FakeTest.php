@@ -8,7 +8,7 @@ use PHPUnit\Framework\AssertionFailedError;
 
 beforeEach(fn () => FixturePlugin::register());
 
-it('calls actions without an agent', function () {
+it('calls actions without a connector', function () {
     $fake = Aviato::fake();
 
     $fake->executeAction('customers', 'Refund last invoice', [42], ['reason' => 'Duplicate'])
@@ -86,3 +86,15 @@ final class InvokableAction
         return $context->success("Invoked on {$context->recordId()} by ".self::class);
     }
 }
+
+it('uses the default caller and generated ids shared by every Aviato SDK', function () {
+    Aviato::action('customers', 'Open ticket')->global()->execute(function (ActionContext $context) {
+        $ticket = $context->data()->create('tickets', ['subject' => "From {$context->caller->environment}"]);
+
+        return $context->success((string) $ticket['id']);
+    });
+
+    $fake = Aviato::fake();
+    $fake->executeAction('customers', 'Open ticket')->assertSuccess('fake_1');
+    expect($fake->data()->records('tickets'))->toBe([['subject' => 'From test', 'id' => 'fake_1']]);
+});

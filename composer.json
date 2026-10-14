@@ -1,6 +1,6 @@
 {
     "name": "getaviato/laravel",
-    "description": "Extend an Aviato agent with custom actions, computed fields, hooks, segments, search and charts from your Laravel application.",
+    "description": "Extend an Aviato connector with custom actions, computed fields, hooks, segments, search and charts from your Laravel application.",
     "type": "library",
     "license": "MIT",
     "keywords": ["aviato", "laravel", "plugin", "back-office"],

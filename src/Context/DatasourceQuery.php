@@ -2,7 +2,7 @@
 
 namespace Aviato\Laravel\Context;
 
-/** What the agent asks a datasource's list handler for. */
+/** What the connector asks a datasource's list handler for. */
 final readonly class DatasourceQuery
 {
     /**

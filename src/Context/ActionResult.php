@@ -28,7 +28,7 @@ final readonly class ActionResult
         return new self('html', ['html' => $html]);
     }
 
-    /** Downloaded by the user once through the agent. */
+    /** Downloaded by the user once through the connector. */
     public static function file(string $name, string $mimeType, string $content): self
     {
         return new self('file', ['name' => $name, 'mimeType' => $mimeType, 'content' => $content]);
