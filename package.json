@@ -1,6 +1,6 @@
 {
     "name": "@aviato/sdk-laravel",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "private": true,
     "description": "Laravel SDK for Aviato plugins (Composer package getaviato/laravel).",
     "devDependencies": {

@@ -277,3 +277,23 @@ tokens. Only the subdomain label and credential environment-variable name belong
 in SDK configuration. No provider credentials or responses pass through Aviato's
 control plane. See the [Zendesk guide](https://docs.getaviato.com/integrations/zendesk)
 for all methods, permissions and release requirements.
+
+## Intercom widgets
+
+```php
+use Aviato\Laravel\Integrations\IntercomPlugin;
+use Aviato\Laravel\Integrations\RecordBinding;
+Aviato::use((new IntercomPlugin('eu', 'INTERCOM_WIDGET_TOKEN', true))
+    ->contact('customers', 'support', externalId: new RecordBinding('id')));
+```
+
+The contact card shows the profile, open conversations and open tickets of one contact.
+Bind to a local ID column or one belongsTo relation with exactly one of `externalId`
+(matched on the Intercom `external_id`) or `contactId` (the Intercom contact ID);
+anything else throws. The region is exactly `us`, `eu` or `au`, never a URL. Install a
+customer connector with Intercom support before using this API. This example requires SDK
+release 0.7.0. SDK releases do not publish connector binaries.
+
+Store the access token on the **customer connector** and declare it read-only. Only the
+region and the credential environment-variable name belong in SDK configuration. No
+provider credentials or responses pass through Aviato's control plane. Aviato cannot verify that the token is read-only; that depends on the Intercom app's permissions. See the [Intercom guide](https://docs.getaviato.com/integrations/intercom).
