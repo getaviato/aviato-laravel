@@ -77,6 +77,40 @@ it('runs the connector in development mode, keeping the generated classes up to 
         ->assertSuccessful();
 })->skipOnWindows();
 
+it('runs the developer\'s own development environment without a token', function () {
+    File::put("{$this->directory}/aviato-connector", "#!/bin/sh\necho \"[\$AVIATO_CONNECTOR_TOKEN] [\$AVIATO_CONTROL_PLANE_URL] args: \$*\"\n");
+    chmod("{$this->directory}/aviato-connector", 0755);
+    config()->set('aviato.connector.database_url', 'postgres://localhost/shop');
+
+    $this->artisan('aviato:serve', ['--dev' => true, '--project' => 'prj_1', '--login' => true])
+        ->expectsOutputToContain('[] [] args: dev --project prj_1 --login')
+        ->assertSuccessful();
+
+    config()->set('aviato.connector.project', 'prj_2');
+    $this->artisan('aviato:serve', ['--dev' => true])->expectsOutputToContain('args: dev --project prj_2')->assertSuccessful();
+})->skipOnWindows();
+
+it('keeps a configured token over aviato.connector.project, and needs --dev for --project', function () {
+    File::put("{$this->directory}/aviato-connector", "#!/bin/sh\necho \"[\$AVIATO_CONNECTOR_TOKEN] args: \$*\"\n");
+    chmod("{$this->directory}/aviato-connector", 0755);
+    config()->set('aviato.connector.control_plane_url', 'https://aviato.test');
+    config()->set('aviato.connector.token', 'agt_1');
+    config()->set('aviato.connector.project', 'prj_2');
+    config()->set('aviato.connector.database_url', 'postgres://localhost/shop');
+
+    $this->artisan('aviato:serve', ['--dev' => true])->expectsOutputToContain('[agt_1] args: dev')->doesntExpectOutputToContain('--project')->assertSuccessful();
+    $this->artisan('aviato:serve', ['--project' => 'prj_1'])->expectsOutputToContain('needs --dev')->assertFailed();
+})->skipOnWindows();
+
+it('shares the development connector through a tunnel, only with --dev', function () {
+    File::put("{$this->directory}/aviato-connector", "#!/bin/sh\necho \"args: \$*\"\n");
+    chmod("{$this->directory}/aviato-connector", 0755);
+    config()->set('aviato.connector.database_url', 'postgres://localhost/shop');
+
+    $this->artisan('aviato:serve', ['--dev' => true, '--project' => 'prj_1', '--tunnel' => true])->expectsOutputToContain('args: dev --project prj_1 --tunnel')->assertSuccessful();
+    $this->artisan('aviato:serve', ['--tunnel' => true])->expectsOutputToContain('needs --dev')->assertFailed();
+})->skipOnWindows();
+
 it('generates collection classes from the database without a project connection', function () {
     File::put("{$this->directory}/aviato-connector", "#!/bin/sh\necho \"\$AVIATO_DATABASE_URL [\$AVIATO_CONNECTOR_TOKEN] args: \$*\"\n");
     chmod("{$this->directory}/aviato-connector", 0755);

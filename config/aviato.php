@@ -77,14 +77,16 @@ return [
     */
 
     'connector' => [
-        'version' => env('AVIATO_CONNECTOR_VERSION', env('AVIATO_AGENT_VERSION', '0.1.0')),
-        'download_url' => env('AVIATO_CONNECTOR_DOWNLOAD_URL', env('AVIATO_AGENT_DOWNLOAD_URL', 'https://github.com/getaviato/aviato/releases/download/connector-v{version}/aviato-connector-{os}-{arch}{ext}')),
+        'version' => env('AVIATO_CONNECTOR_VERSION', env('AVIATO_AGENT_VERSION', '0.5.0')),
+        'download_url' => env('AVIATO_CONNECTOR_DOWNLOAD_URL', env('AVIATO_AGENT_DOWNLOAD_URL', 'https://github.com/getaviato/aviato/releases/download/v{version}/aviato-connector-{os}-{arch}{ext}')),
         // Optional: a URL returning the SHA-256 of the binary (same placeholders plus {url}).
         'checksum_url' => env('AVIATO_CONNECTOR_CHECKSUM_URL', env('AVIATO_AGENT_CHECKSUM_URL')),
         'path' => env('AVIATO_CONNECTOR_PATH', env('AVIATO_AGENT_PATH')),
         'data_dir' => env('AVIATO_DATA_DIR'),
         'control_plane_url' => env('AVIATO_CONTROL_PLANE_URL'),
         'token' => env('AVIATO_CONNECTOR_TOKEN', env('AVIATO_AGENT_TOKEN')),
+        // Without a token, `aviato:serve --dev` runs your own development environment of this project.
+        'project' => env('AVIATO_PROJECT'),
         // Defaults to a URL built from the connection below (the default connection when null).
         'database_url' => env('AVIATO_DATABASE_URL'),
         'connection' => env('AVIATO_DB_CONNECTION'),

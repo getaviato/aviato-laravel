@@ -11,22 +11,31 @@ final class ConnectorEnvironment
     public function __construct(private readonly Repository $config) {}
 
     /**
+     * @param  bool  $development  The connector runs the developer's own development environment
+     *                             (`aviato:serve --dev --project`): it signs them in and gets the
+     *                             environment's credential itself, so no token is needed.
      * @return array<string, string>
      *
      * @throws InvalidArgumentException when a required setting is missing.
      */
-    public function variables(): array
+    public function variables(bool $development = false): array
     {
         $connector = $this->connector();
+        $controlPlaneUrl = $this->string($connector['control_plane_url'] ?? null);
+        $token = $this->string($connector['token'] ?? null);
         $variables = [
-            'AVIATO_CONTROL_PLANE_URL' => $this->string($connector['control_plane_url'] ?? null) ?? throw new InvalidArgumentException('Set AVIATO_CONTROL_PLANE_URL (aviato.connector.control_plane_url).'),
-            'AVIATO_CONNECTOR_TOKEN' => $this->string($connector['token'] ?? null) ?? throw new InvalidArgumentException('Set AVIATO_CONNECTOR_TOKEN (aviato.connector.token).'),
             'AVIATO_DATA_DIR' => $this->string($connector['data_dir'] ?? null) ?? storage_path('aviato/data'),
             'AVIATO_PLUGIN_URL' => $this->pluginUrl(),
             'AVIATO_PLUGIN_SECRET' => $this->string($this->config->get('aviato.secret')) ?? throw new InvalidArgumentException('Set AVIATO_PLUGIN_SECRET (aviato.secret).'),
         ];
-        // Existing supplied binaries still read the original token variable.
-        $variables['AVIATO_AGENT_TOKEN'] = $variables['AVIATO_CONNECTOR_TOKEN'];
+        if ($controlPlaneUrl !== null || ! $development) {
+            $variables['AVIATO_CONTROL_PLANE_URL'] = $controlPlaneUrl ?? throw new InvalidArgumentException('Set AVIATO_CONTROL_PLANE_URL (aviato.connector.control_plane_url).');
+        }
+        if (! $development) {
+            $variables['AVIATO_CONNECTOR_TOKEN'] = $token ?? throw new InvalidArgumentException('Set AVIATO_CONNECTOR_TOKEN (aviato.connector.token), or run `php artisan aviato:serve --dev --project=<project id>` to use your own development environment.');
+            // Existing supplied binaries still read the original token variable.
+            $variables['AVIATO_AGENT_TOKEN'] = $variables['AVIATO_CONNECTOR_TOKEN'];
+        }
 
         return [...$this->databaseVariables(), ...$variables, ...$this->extraVariables()];
     }

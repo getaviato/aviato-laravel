@@ -146,6 +146,14 @@ During development, `php artisan aviato:serve --dev` reloads the plugin's manife
 and waits for your application to answer. Add `--types=app/Aviato` to regenerate the collection
 classes when the database schema changes.
 
+Each developer can run their own development environment of a project instead of sharing a
+token: `php artisan aviato:serve --dev --project=<project id>` (or `AVIATO_PROJECT` in `.env`
+without `AVIATO_CONNECTOR_TOKEN`). The first run prints a link to approve this computer in the
+dashboard; later runs reuse the credential stored in `~/.config/aviato`. `--login` approves
+again. Add `--tunnel` to share it with MCP clients through a temporary Cloudflare quick
+tunnel; the connector downloads Cloudflare's `cloudflared` the first time when it is not
+installed. Both need connector 0.5.0 or later (`php artisan aviato:install` downloads it).
+
 ### Collection classes
 
 ```bash
