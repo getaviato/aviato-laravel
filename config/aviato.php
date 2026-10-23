@@ -77,8 +77,8 @@ return [
     */
 
     'connector' => [
-        'version' => env('AVIATO_CONNECTOR_VERSION', env('AVIATO_AGENT_VERSION', '0.5.0')),
-        'download_url' => env('AVIATO_CONNECTOR_DOWNLOAD_URL', env('AVIATO_AGENT_DOWNLOAD_URL', 'https://github.com/getaviato/aviato/releases/download/v{version}/aviato-connector-{os}-{arch}{ext}')),
+        'version' => env('AVIATO_CONNECTOR_VERSION', env('AVIATO_AGENT_VERSION', '0.5.1')),
+        'download_url' => env('AVIATO_CONNECTOR_DOWNLOAD_URL', 'https://github.com/getaviato/connector/releases/download/v{version}/aviato-{os}-{arch}{ext}'),
         // Optional: a URL returning the SHA-256 of the binary (same placeholders plus {url}).
         'checksum_url' => env('AVIATO_CONNECTOR_CHECKSUM_URL', env('AVIATO_AGENT_CHECKSUM_URL')),
         'path' => env('AVIATO_CONNECTOR_PATH', env('AVIATO_AGENT_PATH')),

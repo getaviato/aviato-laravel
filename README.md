@@ -12,13 +12,13 @@ Requires PHP 8.3+ and Laravel 12 or 13.
 
 ```bash
 composer require getaviato/laravel
-php artisan aviato:install --no-download   # publishes config/aviato.php
+php artisan aviato:install   # publishes config/aviato.php and downloads the connector
 ```
 
-The SDK connects your application to an existing Aviato connector. Public connector binaries
-are not yet available from the default download URL. Supply your own connector binary
-or use an already running connector; omit `--no-download` only when a working connector
-download URL has been configured.
+The connector binary comes from the public
+[getaviato/connector releases](https://github.com/getaviato/connector/releases), at
+`aviato.connector.version`. Pass `--no-download` when the application connects to a connector
+that runs elsewhere.
 
 ## Configure
 

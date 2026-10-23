@@ -56,7 +56,7 @@ class Plugin
 
     public const SDK_NAME = 'getaviato/laravel';
 
-    public const SDK_VERSION = '0.8.0';
+    public const SDK_VERSION = '0.8.1';
 
     /** @var array<string, ActionDefinition> */
     private array $actions = [];
